@@ -1,3 +1,5 @@
+# CS 361 S2.6 - Assignment 8: "Microservice A" Implementation (Milestone #2)
+
 # Plant-Microservice
 microservice implementation for a plant image service
 
