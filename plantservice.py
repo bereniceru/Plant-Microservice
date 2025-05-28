@@ -1,18 +1,23 @@
 # plantservice.py
 # plant image service
 # Just provide a plant name, get an image path
-# still working on the rest of the implementation, it will have species, genus, and more relevant functionality
+# also takes "genus:species" format
 
 import time
 import os
 
 # Sample plant database, will link images to the plants
-# more details and functions will be added like genus, etc
+# added Genus:species 
 PLANTS = {
+    # Common names
     "bamboo": "images/bamboo.jpg",
     "cactus": "images/cactus.jpg",
     "pine": "images/pine.jpg",
-    "orchids": "images/orchids.jpg"
+    "orchids": "images/orchids.jpg",
+    
+    # Genus:species examples, optional
+    "bambusa:vulgaris": "images/bamboo.jpg",
+    "cactaceae:varied": "images/cactus.jpg"
 }
 
 print("Plant Image Service is running...")
@@ -25,17 +30,19 @@ if not os.path.exists(IMAGES_FOLDER):
     
     # this is a placeholder, if the plan name is relevant to the DATA it should generate a path
     for plant_name, path in PLANTS.items():
-        with open(path, "w") as f:
-            f.write(f"Placeholder for {plant_name} image\n")
-            f.write("Replace with actual .jpg image file\n")
+        # create placeholders for common names (with no colons)
+        if ":" not in plant_name:
+            with open(path, "w") as f:
+                f.write(f"Placeholder for {plant_name} image\n")
+                f.write(".jpg will appear here\n")
     
-    print("Created sample placeholder images")
+    print("Created sample image folder")
 
 print("Waiting for plant-service.txt")
     
 # main loop
 while True:
-    time.sleep(1)  # check every second (i might change the seconds)
+    time.sleep(5)  # check every second (i might change the seconds)
     
     try:
         # read data from the service file
@@ -48,7 +55,7 @@ while True:
         
         print(f"Processing request: '{content}'")
         
-        # look up the plant name
+        # look up the plant name (now works with genus:species too)
         if content in PLANTS:
             # plant found, return image path
             image_path = PLANTS[content]
