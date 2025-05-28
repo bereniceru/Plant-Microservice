@@ -1,11 +1,11 @@
 # testplant.py
 # this is a test file to check the plantservice.py functionality
-# the plants are based off the plantservice data
+# now supports both common names and genus:species format
 # disclaimer, the plant data is only for testing
 import time
 
 def get_plant_image(plant_name):
-    """Get a plant image by name"""
+    ## get a plant image by name or genus:species
     print(f"\nLooking up image for plant: '{plant_name}'")
     
     # write plant name to communication file
@@ -39,21 +39,26 @@ def get_plant_image(plant_name):
             print(f"Error reading image: {e}")
         
         return response
-# these are just sample plants for testing, more options for the microservice will be implemented
+
 def print_available_plants():
     """Print the list of available plants"""
-    print("\nAvailable plants:")
+    print("\nAvailable plants (common names):")
     print("- bamboo")
     print("- cactus")
     print("- pine")
     print("- orchids")
 
+    # when clicking option 2 you can also search with a genus:species format
+    # these are examples of what can be inputed:
+    # bambusa:vulgaris
+    # cactaceae:varied
 
 def main():
     """Main test function"""
     print("Plant Image Service")
-    print("=====================================")
+    print("☆  ☆  ☆  ☆  ☆  ☆  ☆")
     print("This test will demonstrate a plant image retrieval service")
+    print("Now supports both common names and genus:species format!")
     
     # this will double check that there is a plant-service.txt available
     try:
@@ -77,7 +82,7 @@ def main():
         if choice == "1":
             print_available_plants()
         elif choice == "2":
-            plant_name = input("Enter plant name: ").strip().lower()
+            plant_name = input("Enter plant name or genus:species: ").strip().lower()
             get_plant_image(plant_name)
         elif choice == "3":
             print("Exiting...")
