@@ -3,7 +3,7 @@
 # now supports both common names and genus:species format
 # disclaimer, the plant data is only for testing
 import time
-
+import os
 def get_plant_image(plant_name):
     ## get a plant image by name or genus:species
     print(f"\nLooking up image for plant: '{plant_name}'")
@@ -47,7 +47,6 @@ def get_plant_image(plant_name):
 
 def print_available_plants():
     """Print the list of available plants"""
-    import os
     print("\nAvailable plants:")
     
     if os.path.exists("images"):
