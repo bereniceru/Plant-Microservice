@@ -6,19 +6,21 @@
 import time
 import os
 
-# Sample plant database, will link images to the plants
+# sample plant function 
 # added Genus:species 
-PLANTS = {
-    # Common names
-    "bamboo": "images/bamboo.jpg",
-    "cactus": "images/cactus.jpg",
-    "pine": "images/pine.jpg",
-    "orchids": "images/orchids.jpg",
+def get_plants():
+    plants = {}
     
-    # Genus:species examples, optional
-    "bambusa:vulgaris": "images/bamboo.jpg",
-    "cactaceae:varied": "images/cactus.jpg"
-}
+    # add any files found in images folder
+    if os.path.exists("images"):
+        for filename in os.listdir("images"):
+            if filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
+
+                # Use filename without extension 
+                name = os.path.splitext(filename)[0].lower()
+                plants[name] = f"images/{filename}"
+    
+    return plants
 
 print("Plant Image Service is running...")
 
@@ -27,16 +29,6 @@ IMAGES_FOLDER = "images"
 if not os.path.exists(IMAGES_FOLDER):
     os.makedirs(IMAGES_FOLDER)
     print(f"Created {IMAGES_FOLDER} directory")
-    
-    # this is a placeholder, if the plan name is relevant to the DATA it should generate a path
-    for plant_name, path in PLANTS.items():
-        # create placeholders for common names (with no colons)
-        if ":" not in plant_name:
-            with open(path, "w") as f:
-                f.write(f"Placeholder for {plant_name} image\n")
-                f.write(".jpg will appear here\n")
-    
-    print("Created sample image folder")
 
 print("Waiting for plant-service.txt")
     
@@ -54,6 +46,9 @@ while True:
             continue
         
         print(f"Processing request: '{content}'")
+        
+        # Get current plants from folder
+        PLANTS = get_plants()
         
         # look up the plant name (now works with genus:species too)
         if content in PLANTS:
