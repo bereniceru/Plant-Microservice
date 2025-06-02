@@ -40,16 +40,33 @@ def get_plant_image(plant_name):
         
         return response
 
+
+## hardcoded lines were removed
+## the available plant function should only show things in the images folder
+
+
 def print_available_plants():
     """Print the list of available plants"""
-    print("\nAvailable plants (common names):")
-    print("- bamboo")
-    print("- cactus")
-    print("- pine")
-    print("- orchids")
+    import os
+    print("\nAvailable plants:")
+    
+    if os.path.exists("images"):
+        plants = []
+        for filename in os.listdir("images"):
+            if filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
+                name = os.path.splitext(filename)[0]
+                plants.append(f"- {name}")
+        
+        if plants:
+            for plant in sorted(plants):
+                print(plant)
+        else:
+            print("No plant images found in images folder")
+    else:
+        print("Images folder not found")
 
     # when clicking option 2 you can also search with a genus:species format
-    # these are examples of what can be inputed:
+    # theres are examples of what can be inputted
     # bambusa:vulgaris
     # cactaceae:varied
 
@@ -58,7 +75,7 @@ def main():
     print("Plant Image Service")
     print("☆  ☆  ☆  ☆  ☆  ☆  ☆")
     print("This test will demonstrate a plant image retrieval service")
-    print("Now supports both common names and genus:species format!")
+   
     
     # this will double check that there is a plant-service.txt available
     try:
